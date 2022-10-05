@@ -1,0 +1,48 @@
+
+apiVersion: source.toolkit.fluxcd.io/v1beta1
+kind: HelmRepository
+metadata:
+  name: weave-gitops
+  namespace: flux-system
+spec:
+  interval: 10m0s
+  url: https://charts.dev.wkp.weave.works/releases/charts-v3
+  secretRef:
+    name: weave-gitops-enterprise-credentials
+
+
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: weave-gitops
+  namespace: flux-system
+spec:
+  chart:
+    spec:
+      chart: mccp
+      version: 0.x.x
+      sourceRef:
+        kind: HelmRepository
+        name: weave-gitops
+        namespace: flux-system
+  install:
+    crds: CreateReplace
+  upgrade:
+    crds: CreateReplace
+  interval: 10m0s
+  releaseName: weave-gitops
+  targetNamespace: flux-system
+  values:
+    config:
+      capi:
+        clusters:
+          namespace: default
+        repositoryClustersPath: clusters
+        repositoryPath: clusters/management/clusters
+        templates:
+          namespace: default
+    rbac:
+      create: true
+    tls:
+      enabled: false

@@ -1,0 +1,18 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+
+  # Flux Kustomization to manage WGE flux-system
+  - flux-system
+
+  # Flux Kustomization to manage secrets 
+  - kustomization-secrets.yaml
+
+  # Flux Kustomization to manage WGE Platform
+  - kustomization-wge.yaml
+
+  # Flux Kustomization to manage Leaf Cluster Manifests
+  - kustomization-capi-cluster.yaml
+
+  # Flux Kustomization to manage Templates 
+  - kustomization-templates.yaml
