@@ -9,8 +9,7 @@ spec:
   url: https://charts.dev.wkp.weave.works/releases/charts-v3
   secretRef:
     name: weave-gitops-enterprise-credentials
-
-
+    
 ---
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
